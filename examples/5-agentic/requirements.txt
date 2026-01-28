@@ -1,0 +1,5 @@
+langchain>=1.2.0
+langchain-core>=1.2.0
+langchain-openai>=1.1.0
+pandas
+requests
