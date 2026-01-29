@@ -18,24 +18,27 @@ class Body(BaseModel):
 
 def ai_chat(user_message):
     message_text = [
-       {"role":"system","content":"You are a friendly AI assistant that helps people find information and answer questions."},
-       {"role": "user", "content": user_message}
+        {
+            "role": "system",
+            "content": "You are a friendly AI assistant that helps people find information and answer questions.",
+        },
+        {"role": "user", "content": user_message},
     ]
 
     completion = openai.ChatCompletion.create(
-      model=model_name,
-      messages=message_text,
-      temperature=0.7,
-      max_tokens=800,
-      top_p=0.95,
-      frequency_penalty=0,
-      presence_penalty=0,
-      stop=None
+        model=model_name,
+        messages=message_text,
+        temperature=0.7,
+        max_tokens=800,
+        top_p=0.95,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None,
     )
     return completion
 
 
-@app.post('/generate')
+@app.post("/generate")
 def generate(body: Body):
     completion = ai_chat(body.text)
-    return {"text": completion['choices'][0]['message']['content']}
+    return {"text": completion["choices"][0]["message"]["content"]}

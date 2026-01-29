@@ -3,6 +3,7 @@ from langchain_core.tools import tool
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 
+
 @tool
 def get_weather(day: str = "today") -> str:
     """Get weather conditions. Use 'today' or 'week'."""
@@ -15,13 +16,14 @@ def get_weather(day: str = "today") -> str:
             "Thu": "Clear, 70°F",
             "Fri": "Cloudy, 65°F",
             "Sat": "Sunny, 75°F",
-            "Sun": "Sunny, 78°F"
-        }
+            "Sun": "Sunny, 78°F",
+        },
     }
-    
+
     if day == "today":
         return f"Today's weather: {mock_weather['today']}"
     return f"Week forecast: {json.dumps(mock_weather['week'])}"
+
 
 # ========== AGENT SETUP ==========
 def create_bike_agent():
@@ -33,7 +35,7 @@ def create_bike_agent():
         model="qwen3-coder",  # Model name from your local server
         base_url="http://localhost:11434/v1",  # Local LLM endpoint
         api_key="not-needed",
-        temperature=0
+        temperature=0,
     )
 
     # Define tools
@@ -45,6 +47,7 @@ def create_bike_agent():
     2. Provide specific recommendations with reasoning"""
 
     return create_agent(llm, tools, system_prompt=system_prompt, debug=True)
+
 
 if __name__ == "__main__":
     print("Bike Ride Planning Assistant")
@@ -64,9 +67,11 @@ if __name__ == "__main__":
     print("\n--- Agent Message Flow ---")
     for i, msg in enumerate(result["messages"]):
         msg_type = type(msg).__name__
-        if hasattr(msg, 'tool_calls') and msg.tool_calls:
-            print(f"[{i}] {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}")
-        elif hasattr(msg, 'name') and msg.name:  # Tool response
+        if hasattr(msg, "tool_calls") and msg.tool_calls:
+            print(
+                f"[{i}] {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}"
+            )
+        elif hasattr(msg, "name") and msg.name:  # Tool response
             print(f"[{i}] ToolMessage ({msg.name}): {msg.content[:80]}...")
         else:
             content_preview = str(msg.content)[:100] if msg.content else "(empty)"

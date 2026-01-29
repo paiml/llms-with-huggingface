@@ -21,11 +21,14 @@ jobs:
       - name: Install ruff
         run: pip install ruff
 
-      - name: Run ruff
+      - name: Run ruff check
         run: ruff check examples/ --ignore E501,E722
 
-  validate:
-    name: Validate Python
+      - name: Run ruff format check
+        run: ruff format --check examples/
+
+  test:
+    name: Test (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,8 +42,18 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Validate Python syntax
-        run: |
-          for f in $(find examples -name "*.py"); do
-            python -m py_compile "$f"
-            echo "✓ $f"
-          done
+        run: make test
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Coverage check
+        run: make coverage

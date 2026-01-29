@@ -1,0 +1,3 @@
+#!/bin/bash
+# Standard pre-commit hook that runs pre-commit framework
+exec pre-commit run --hook-stage pre-commit

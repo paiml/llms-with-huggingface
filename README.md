@@ -1,18 +1,24 @@
 [![LLMs with Hugging Face](./assets/banner.svg)](https://ds500.paiml.com "Pragmatic AI Labs")
 
-This repository contains hands-on labs for running and building applications with Large Language Models. A Hugging Face course from Pragmatic AI Labs.
-
 # Large Language Models with Hugging Face
+
+Hands-on labs for running and building applications with Large Language Models. A Hugging Face course from Pragmatic AI Labs.
+
+## Overview
 
 In this course, you will learn how to build applications and solutions with Large Language Models using the Hugging Face platform. You'll explore retrieval augmented generation, function calling, and agent development to create powerful AI solutions that can interact with external systems and data.
 
-## Contents
+## Installation
+
+See [Local Setup](#local-setup) for detailed instructions, or use GitHub Codespaces:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new?hide_repo_select=true&ref=main)
+
+## Usage
 
 This repository has several examples located in the [./examples](./examples) directory and hands-on labs in the [./labs](./labs) directory. Make sure you have Python installed and you are using [Visual Studio Code](https://code.visualstudio.com/?WT.mc_id=academic-0000-alfredodeza).
 
-This repository is *Codespaces ready*, and it is set as a template repository. You can create a new repository from this template and start working on your own with Codespaces. This means that Python, Copilot, and all the extensions are already installed and configured for you.
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new?hide_repo_select=true&ref=main)
+This repository is *Codespaces ready*, and it is set as a template repository. You can create a new repository from this template and start working on your own with Codespaces.
 
 ## Labs
 

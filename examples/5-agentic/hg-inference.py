@@ -25,6 +25,7 @@ from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 # Option 2: Set directly (not recommended for production)
 # os.environ["HF_TOKEN"] = "your_token_here"
 
+
 # ========== TOOLS ==========
 @tool
 def get_weather(day: str = "today") -> str:
@@ -39,15 +40,16 @@ def get_weather(day: str = "today") -> str:
                 "Thu": "Clear, 70°F",
                 "Fri": "Cloudy, 65°F",
                 "Sat": "Sunny, 75°F",
-                "Sun": "Sunny, 78°F"
-            }
+                "Sun": "Sunny, 78°F",
+            },
         }
-        
+
         if day == "today":
             return f"Today's weather: {mock_weather['today']}"
         return f"Week forecast: {json.dumps(mock_weather['week'])}"
     except:
         return "Weather data unavailable"
+
 
 @tool
 def get_trail_status(trail: str = "both") -> str:
@@ -57,16 +59,16 @@ def get_trail_status(trail: str = "both") -> str:
             "status": "Open",
             "conditions": "Good",
             "last_update": "2024-01-20",
-            "notes": "Trail is dry and fast"
+            "notes": "Trail is dry and fast",
         },
         "blankets_creek": {
             "status": "Closed",
             "conditions": "Wet",
             "last_update": "2024-01-20",
-            "notes": "Closed due to rain"
-        }
+            "notes": "Closed due to rain",
+        },
     }
-    
+
     if trail == "rope_mill":
         return f"Rope Mill: {json.dumps(trails['rope_mill'])}"
     elif trail == "blankets":
@@ -74,20 +76,29 @@ def get_trail_status(trail: str = "both") -> str:
     else:
         return f"All trails: {json.dumps(trails)}"
 
+
 @tool
 def get_recent_workouts(days: int = 7) -> str:
     """Get recent workouts from fitness tracker CSV."""
     try:
-        df = pd.DataFrame({
-            'date': ['2024-01-15', '2024-01-16', '2024-01-18', '2024-01-20'],
-            'workout': ['Bike - 30mi', 'Run - 5mi', 'Bike - 15mi', 'Strength - 60min'],
-            'intensity': ['High', 'Medium', 'Low', 'Medium']
-        })
-        
-        recent = df.tail(days).to_dict('records')
+        df = pd.DataFrame(
+            {
+                "date": ["2024-01-15", "2024-01-16", "2024-01-18", "2024-01-20"],
+                "workout": [
+                    "Bike - 30mi",
+                    "Run - 5mi",
+                    "Bike - 15mi",
+                    "Strength - 60min",
+                ],
+                "intensity": ["High", "Medium", "Low", "Medium"],
+            }
+        )
+
+        recent = df.tail(days).to_dict("records")
         return f"Recent workouts: {json.dumps(recent)}"
     except:
         return "No workout data available"
+
 
 # ========== AGENT SETUP WITH HUGGING FACE ==========
 def create_bike_agent_hf():
@@ -131,7 +142,10 @@ def create_bike_agent_hf():
 ALWAYS call the relevant tools first, then provide your recommendation based on the actual data."""
 
     # Create agent with tool-bound model
-    return create_agent(chat_llm_with_tools, tools, system_prompt=system_prompt, debug=True)
+    return create_agent(
+        chat_llm_with_tools, tools, system_prompt=system_prompt, debug=True
+    )
+
 
 # ========== MAIN EXECUTION ==========
 if __name__ == "__main__":
@@ -146,17 +160,17 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Failed to create agent: {e}")
         exit(1)
-    
+
     # Test query
     queries = [
         "Should I ride today? Check the weather and trail status.",
     ]
-    
+
     for i, query in enumerate(queries):
-        print(f"\n{'='*60}")
-        print(f"Query {i+1}: {query}")
-        print(f"{'='*60}")
-        
+        print(f"\n{'=' * 60}")
+        print(f"Query {i + 1}: {query}")
+        print(f"{'=' * 60}")
+
         try:
             result = agent.invoke({"messages": [("user", query)]})
 
@@ -164,11 +178,13 @@ if __name__ == "__main__":
             print("\n--- Agent Message Flow ---")
             for msg in result["messages"]:
                 msg_type = type(msg).__name__
-                if hasattr(msg, 'tool_calls') and msg.tool_calls:
-                    print(f"  {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}")
-                elif hasattr(msg, 'name') and msg.name:
+                if hasattr(msg, "tool_calls") and msg.tool_calls:
+                    print(
+                        f"  {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}"
+                    )
+                elif hasattr(msg, "name") and msg.name:
                     print(f"  ToolMessage ({msg.name}): {msg.content[:100]}...")
-                elif hasattr(msg, 'content') and msg.content:
+                elif hasattr(msg, "content") and msg.content:
                     content = str(msg.content)
                     if len(content) > 100:
                         print(f"  {msg_type}: {content[:100]}...")
@@ -176,11 +192,11 @@ if __name__ == "__main__":
                         print(f"  {msg_type}: {content}")
 
             # Show final recommendation
-            print(f"\n{'='*60}")
+            print(f"\n{'=' * 60}")
             print("RECOMMENDATION:")
             if result["messages"]:
                 print(result["messages"][-1].content)
-        
+
         except Exception as e:
             print(f"❌ Error: {e}")
             print(" Tip: Some free models don't support tool calling well.")
