@@ -14,6 +14,7 @@ Hands-on labs for running and building applications with Large Language Models. 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Labs](#labs)
+- [Capstone Project](#capstone-project)
 - [Course Outline](#course-outline)
 - [Local Setup](#local-setup)
 - [Resources](#resources)
@@ -47,6 +48,10 @@ Complete these hands-on labs to reinforce your learning:
 | [Lab 3: Building LLM APIs with FastAPI](./labs/lab-3.md) | HTTP APIs, FastAPI endpoints, RAG integration | [examples/3-api](./examples/3-api/) |
 | [Lab 4: Working with Small Language Models](./labs/lab-4.md) | Model selection, optimization, benchmarking, model routing | [examples/4-small-lm](./examples/4-small-lm/) |
 | [Lab 5: Building Agentic Applications](./labs/lab-5.md) | Function calling, tool use, LangChain agents, Hugging Face Inference | [examples/5-agentic](./examples/5-agentic/) |
+
+### Capstone Project
+
+After completing all labs, build a comprehensive AI-powered research assistant in the [Capstone Project](./docs/capstone-project.md). This project combines RAG, agents, and API development into a production-ready application.
 
 ## Course Outline
 
