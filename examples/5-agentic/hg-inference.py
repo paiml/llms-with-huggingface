@@ -15,11 +15,9 @@ Requirements:
 import json
 import pandas as pd
 import os
-from typing import List, Dict, Any
 from langchain_core.tools import tool
 from langchain.agents import create_agent
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
-import requests
 
 # Set your Hugging Face token (free tier works!)
 # Option 1: Set as environment variable

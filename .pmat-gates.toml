@@ -1,0 +1,17 @@
+# PMAT Quality Gates Configuration
+# This file defines quality thresholds for the repository
+
+[gates]
+# Minimum score required to pass
+min_score = 70
+
+# Category-specific thresholds
+[gates.categories]
+documentation = 80
+repository_hygiene = 90
+build_test = 50
+ci_cd = 80
+
+[metadata]
+project_type = "examples"
+language = "python"

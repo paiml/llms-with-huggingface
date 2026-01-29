@@ -1,0 +1,14 @@
+# PMAT Metrics Configuration
+# Quality thresholds for this repository
+
+[thresholds]
+# No unit tests in this example repository
+test_coverage = 0
+mutation_coverage = 0
+
+[project]
+type = "examples"
+language = "python"
+
+[ci]
+required_checks = ["lint", "validate"]

@@ -18,12 +18,9 @@ instead of actually calling the tools.
 """
 import json
 import pandas as pd
-from datetime import datetime
-from typing import List, Dict, Any
 from langchain_core.tools import tool
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
-import requests
 
 # ========== TOOLS ==========
 @tool
