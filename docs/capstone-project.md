@@ -1,19 +1,24 @@
 # Capstone Project: AI-Powered Research Assistant
 
-Build a comprehensive AI-powered research assistant that combines all the concepts learned throughout this course. This project will demonstrate your mastery of LLM integration, RAG systems, API development, and agentic workflows.
+Build a comprehensive AI-powered research assistant that combines all the concepts learned throughout this course. This project demonstrates your mastery of LLM integration, RAG systems, API development, and agentic workflows.
+
+---
 
 ## Project Overview
 
 You will build a **Research Assistant** that can:
+
 - Answer questions using a knowledge base (RAG)
 - Search the web for current information (Agents)
 - Summarize documents and articles (LLM APIs)
 - Provide structured responses for data analysis (Structured Output)
 - Run as a web service accessible via API (FastAPI)
 
+---
+
 ## Learning Objectives
 
-By completing this capstone project, you will demonstrate your ability to:
+By completing this capstone, you will demonstrate your ability to:
 
 - Integrate multiple LLM capabilities into a cohesive application
 - Design and implement a production-ready RAG pipeline
@@ -22,15 +27,15 @@ By completing this capstone project, you will demonstrate your ability to:
 - Handle errors gracefully and provide meaningful feedback
 - Structure code for maintainability and extensibility
 
+---
+
 ## Prerequisites
 
-Complete all five labs before starting this project:
+Ensure you have completed all course modules before starting:
 
-- [Lab 1: Building a Simple Chat Interface](../labs/lab-1.md)
-- [Lab 2: Retrieval Augmented Generation (RAG)](../labs/lab-2.md)
-- [Lab 3: Building LLM APIs with FastAPI](../labs/lab-3.md)
-- [Lab 4: Working with Small Language Models](../labs/lab-4.md)
-- [Lab 5: Building Agentic Applications](../labs/lab-5.md)
+- Module 1: Introduction to LLM Interactions
+- Module 2: Enhancing LLMs with Knowledge and Tools
+- Module 3: Creating Agentic Systems and Deployment Strategies
 
 ### Required Dependencies
 
@@ -38,6 +43,8 @@ Complete all five labs before starting this project:
 pip install openai fastapi uvicorn langchain langchain-openai \
     sentence-transformers qdrant-client pandas pydantic httpx
 ```
+
+---
 
 ## Project Architecture
 
@@ -78,9 +85,11 @@ research-assistant/
 └── README.md
 ```
 
+---
+
 ## Implementation Guide
 
-### Part 1: Core LLM Integration (From Lab 1)
+### Part 1: Core LLM Integration
 
 Create a reusable LLM client that supports both local and remote models:
 
@@ -90,6 +99,7 @@ import os
 from typing import Any
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
+
 
 class LLMClient:
     """Unified LLM client for local and remote models."""
@@ -131,7 +141,7 @@ class LLMClient:
         return completion.choices[0].message.content or ""
 ```
 
-### Part 2: RAG Pipeline (From Lab 2)
+### Part 2: RAG Pipeline
 
 Implement the knowledge base with vector search:
 
@@ -140,6 +150,7 @@ Implement the knowledge base with vector search:
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient, models
 from typing import Any
+
 
 class VectorStore:
     """Vector database for document storage and retrieval."""
@@ -186,7 +197,7 @@ class VectorStore:
         return [hit.payload for hit in hits.points]
 ```
 
-### Part 3: Agent Tools (From Lab 5)
+### Part 3: Agent Tools
 
 Create tools for the research agent:
 
@@ -194,6 +205,7 @@ Create tools for the research agent:
 # src/agents/tools/web_search.py
 import httpx
 from langchain_core.tools import tool
+
 
 @tool
 def web_search(query: str) -> str:
@@ -206,12 +218,12 @@ def web_search(query: str) -> str:
         Search results as a formatted string.
     """
     # In production, use a real search API (Google, Bing, etc.)
-    # This is a mock implementation for demonstration
     return f"Mock search results for: {query}"
 
 
 # src/agents/tools/summarizer.py
 from langchain_core.tools import tool
+
 
 @tool
 def summarize_text(text: str, max_length: int = 200) -> str:
@@ -224,7 +236,6 @@ def summarize_text(text: str, max_length: int = 200) -> str:
     Returns:
         A concise summary of the text.
     """
-    # Use the LLM to generate a summary
     from src.models.llm import LLMClient
 
     client = LLMClient()
@@ -232,7 +243,7 @@ def summarize_text(text: str, max_length: int = 200) -> str:
     return client.get_response(prompt, system_prompt="You are a concise summarizer.")
 ```
 
-### Part 4: Research Agent (From Lab 5)
+### Part 4: Research Agent
 
 Build the main agent that orchestrates all capabilities:
 
@@ -243,6 +254,7 @@ from langchain_openai import ChatOpenAI
 from src.agents.tools.web_search import web_search
 from src.agents.tools.summarizer import summarize_text
 from src.rag.vectorstore import VectorStore
+
 
 class ResearchAgent:
     """AI-powered research assistant with RAG and tool capabilities."""
@@ -309,7 +321,7 @@ Always:
         self.vector_store.add_documents(documents)
 ```
 
-### Part 5: FastAPI Application (From Lab 3)
+### Part 5: FastAPI Application
 
 Create the web API:
 
@@ -406,48 +418,51 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
+---
+
 ## Evaluation Criteria
 
 Your capstone project will be evaluated on:
 
 ### Functionality (40 points)
-- [ ] Chat endpoint works correctly (10 pts)
-- [ ] RAG search returns relevant results (10 pts)
-- [ ] Agent uses tools appropriately (10 pts)
-- [ ] Documents can be added to knowledge base (10 pts)
+
+- Chat endpoint works correctly (10 pts)
+- RAG search returns relevant results (10 pts)
+- Agent uses tools appropriately (10 pts)
+- Documents can be added to knowledge base (10 pts)
 
 ### Code Quality (30 points)
-- [ ] Clean, well-organized code structure (10 pts)
-- [ ] Type hints and docstrings (10 pts)
-- [ ] Error handling and edge cases (10 pts)
+
+- Clean, well-organized code structure (10 pts)
+- Type hints and docstrings (10 pts)
+- Error handling and edge cases (10 pts)
 
 ### Documentation (20 points)
-- [ ] Clear README with setup instructions (10 pts)
-- [ ] API documentation (Swagger/OpenAPI) (10 pts)
+
+- Clear README with setup instructions (10 pts)
+- API documentation (Swagger/OpenAPI) (10 pts)
 
 ### Bonus Features (10 points)
-- [ ] Streaming responses (5 pts)
-- [ ] Conversation memory (5 pts)
+
+- Streaming responses (5 pts)
+- Conversation memory (5 pts)
+
+---
 
 ## Challenge Extensions
 
 Once you've completed the basic project, try these extensions:
 
-1. **Add Authentication**: Implement API key authentication for your endpoints
+1. **Add Authentication** — Implement API key authentication for your endpoints
+2. **Persistent Storage** — Replace in-memory vector store with Qdrant, Pinecone, or Chroma
+3. **Streaming Responses** — Implement Server-Sent Events (SSE) for streaming LLM responses
+4. **Conversation Memory** — Add Redis or database-backed conversation history
+5. **Multi-Model Support** — Allow switching between different LLM providers
+6. **Rate Limiting** — Add request throttling to prevent abuse
+7. **Monitoring** — Add logging and metrics with OpenTelemetry
+8. **Deployment** — Deploy to a cloud provider with Docker and Kubernetes
 
-2. **Persistent Storage**: Replace in-memory vector store with persistent storage (Qdrant, Pinecone, or Chroma)
-
-3. **Streaming Responses**: Implement Server-Sent Events (SSE) for streaming LLM responses
-
-4. **Conversation Memory**: Add Redis or database-backed conversation history
-
-5. **Multi-Model Support**: Allow switching between different LLM providers
-
-6. **Rate Limiting**: Add request throttling to prevent abuse
-
-7. **Monitoring**: Add logging and metrics with OpenTelemetry
-
-8. **Deployment**: Deploy to a cloud provider with Docker and Kubernetes
+---
 
 ## Submission Guidelines
 
@@ -460,6 +475,8 @@ Once you've completed the basic project, try these extensions:
 3. Ensure all tests pass
 4. Document any additional features you implemented
 
+---
+
 ## Resources
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
@@ -468,16 +485,16 @@ Once you've completed the basic project, try these extensions:
 - [Sentence Transformers](https://www.sbert.net/)
 - [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 
+---
+
 ## Summary
 
 This capstone project brings together all the skills you've learned:
 
-| Lab | Skill | Application in Capstone |
-|-----|-------|------------------------|
-| Lab 1 | Chat Interface | Core LLM client and chat endpoint |
-| Lab 2 | RAG | Knowledge base and document retrieval |
-| Lab 3 | FastAPI | Web API for all features |
-| Lab 4 | Small Models | Efficient local model usage |
-| Lab 5 | Agents | Research agent with tools |
+| Module | Skill | Application in Capstone |
+|--------|-------|-------------------------|
+| Module 1 | LLM Interactions & Prompting | Core LLM client and chat endpoint |
+| Module 2 | RAG & Tool Integration | Knowledge base, retrieval, and agent tools |
+| Module 3 | Agentic Systems & Deployment | Research agent with FastAPI |
 
-Congratulations on completing the course! You now have the skills to build production-ready LLM applications.
+**Congratulations on completing the course!** You now have the skills to build production-ready LLM applications.

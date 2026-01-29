@@ -6,9 +6,7 @@ from typing import Any
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE")
-)
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE"))
 client.api_base = "http://localhost:11434"
 model_name: str | None = os.getenv("MODEL_NAME")
 

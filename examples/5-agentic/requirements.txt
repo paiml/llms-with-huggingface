@@ -1,5 +1,5 @@
-langchain>=1.2.0
-langchain-core>=1.2.0
-langchain-openai>=1.1.0
-pandas
-requests
+langchain==0.3.14
+langchain-core==0.3.28
+langchain-openai==0.3.0
+pandas==2.2.3
+requests==2.32.3

@@ -18,9 +18,10 @@ instead of actually calling the tools.
 """
 
 import json
+
 import pandas as pd
-from langchain_core.tools import tool
 from langchain.agents import create_agent
+from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 
 
@@ -152,9 +153,7 @@ if __name__ == "__main__":
     for i, msg in enumerate(result["messages"]):
         msg_type = type(msg).__name__
         if hasattr(msg, "tool_calls") and msg.tool_calls:
-            print(
-                f"[{i}] {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}"
-            )
+            print(f"[{i}] {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}")
         elif hasattr(msg, "name") and msg.name:  # Tool response
             print(f"[{i}] ToolMessage ({msg.name}): {msg.content[:80]}...")
         else:

@@ -13,10 +13,11 @@ Requirements:
 """
 
 import json
-import pandas as pd
 import os
-from langchain_core.tools import tool
+
+import pandas as pd
 from langchain.agents import create_agent
+from langchain_core.tools import tool
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 
 # Set your Hugging Face token (free tier works!)
@@ -142,9 +143,7 @@ def create_bike_agent_hf():
 ALWAYS call the relevant tools first, then provide your recommendation based on the actual data."""
 
     # Create agent with tool-bound model
-    return create_agent(
-        chat_llm_with_tools, tools, system_prompt=system_prompt, debug=True
-    )
+    return create_agent(chat_llm_with_tools, tools, system_prompt=system_prompt, debug=True)
 
 
 # ========== MAIN EXECUTION ==========
@@ -179,9 +178,7 @@ if __name__ == "__main__":
             for msg in result["messages"]:
                 msg_type = type(msg).__name__
                 if hasattr(msg, "tool_calls") and msg.tool_calls:
-                    print(
-                        f"  {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}"
-                    )
+                    print(f"  {msg_type}: Calling tools: {[tc['name'] for tc in msg.tool_calls]}")
                 elif hasattr(msg, "name") and msg.name:
                     print(f"  ToolMessage ({msg.name}): {msg.content[:100]}...")
                 elif hasattr(msg, "content") and msg.content:

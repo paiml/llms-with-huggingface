@@ -6,9 +6,16 @@ from typing import Any
 from openai import OpenAI
 from openai.types.chat import ChatCompletion
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE")
-)
+try:
+    from rich.console import Console
+    from rich.panel import Panel
+
+    console = Console()
+    RICH_AVAILABLE = True
+except ImportError:
+    RICH_AVAILABLE = False
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE"))
 client.api_base = "http://localhost:11434"
 model_name: str | None = os.getenv("MODEL_NAME")
 
@@ -43,10 +50,21 @@ def ai_chat(user_message: str) -> ChatCompletion:
     return completion
 
 
-print("Welcome! how can I help you today?")
+def print_response(text: str) -> None:
+    """Print response with rich formatting if available."""
+    if RICH_AVAILABLE:
+        console.print(Panel(text, title="AI Response", border_style="green"))
+    else:
+        print(text)
+
+
+if RICH_AVAILABLE:
+    console.print("[bold cyan]Welcome![/bold cyan] How can I help you today?")
+else:
+    print("Welcome! How can I help you today?")
 
 while True:
     user_message = input(">> ")
     completion = ai_chat(user_message)
-    # Completion will return a response that we need to use to get the actual string
-    print(completion.choices[0].message.content)
+    response = completion.choices[0].message.content
+    print_response(response)

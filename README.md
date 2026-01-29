@@ -6,149 +6,376 @@
   </a>
 </p>
 
-Hands-on labs for running and building applications with Large Language Models. A Hugging Face course from Pragmatic AI Labs.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://img.shields.io/badge/tests-59%20passed-brightgreen.svg)](#)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
 
-## Table of Contents
+<p align="center">
+  <strong>Hands-on labs for building LLM applications with Hugging Face</strong><br>
+  RAG pipelines | Agentic workflows | FastAPI integration | Local & cloud models
+</p>
 
-- [Overview](#overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Labs](#labs)
-- [Capstone Project](#capstone-project)
-- [Course Outline](#course-outline)
-- [Local Setup](#local-setup)
-- [Resources](#resources)
-- [Contributing](#contributing)
-- [License](#license)
+---
 
-## Overview
+## Quick Start
 
-In this course, you will learn how to build applications and solutions with Large Language Models using the Hugging Face platform. You'll explore retrieval augmented generation, function calling, and agent development to create powerful AI solutions that can interact with external systems and data.
+Get up and running in under 2 minutes:
 
-## Installation
+```bash
+# Clone and install
+git clone https://github.com/alfredodeza/hf-llms.git && cd hf-llms
+uv sync --all-extras
 
-See [Local Setup](#local-setup) for detailed instructions, or use GitHub Codespaces:
+# Start Ollama (in separate terminal)
+ollama serve
+ollama pull qwen2.5-coder:7b-instruct
+
+# Run the chat example
+export MODEL_NAME="qwen2.5-coder:7b-instruct"
+export OPENAI_API_BASE="http://localhost:11434/v1"
+export OPENAI_API_KEY="ollama"
+uv run python examples/1-simple/chat.py
+```
+
+**Expected output:**
+```
+Welcome! how can I help you today?
+>> What is Python?
+Python is a high-level, interpreted programming language known for its
+simplicity and readability...
+```
+
+Or use **GitHub Codespaces** for zero-setup:
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new?hide_repo_select=true&ref=main)
 
+---
+
 ## Usage
 
-This repository has several examples located in the [./examples](./examples) directory and hands-on labs in the [./labs](./labs) directory. Make sure you have Python installed and you are using [Visual Studio Code](https://code.visualstudio.com/?WT.mc_id=academic-0000-alfredodeza).
+### Interactive Demo
 
-This repository is *Codespaces ready*, and it is set as a template repository. You can create a new repository from this template and start working on your own with Codespaces.
+Run the visual demo to explore all features:
+
+```bash
+uv run python demo.py
+```
+
+### Chat with LLMs
+
+```python
+from src.models.llm import LLMClient
+
+client = LLMClient()
+response = client.chat("What is machine learning?")
+print(response)
+```
+
+### RAG Pipeline
+
+```python
+from src.rag.vectorstore import VectorStore
+
+# Create vector store and add documents
+store = VectorStore(collection_name="my_docs")
+store.add_documents([
+    {"content": "Machine learning is a subset of AI..."},
+    {"content": "Python is a programming language..."},
+])
+
+# Search for relevant documents
+results = store.search("What is ML?", limit=3)
+```
+
+### REST API
+
+```bash
+# Start the API server
+uv run uvicorn src.api.main:app --reload
+
+# Chat endpoint
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello!"}'
+
+# Research with RAG
+curl -X POST http://localhost:8000/research \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Explain neural networks"}'
+```
+
+---
+
+## Demo Preview
+
+![Demo](./assets/demo.gif)
+
+Run `uv run python demo.py` to see the interactive demo:
+
+```
+╔═══════════════════════════════════════════════════════════════╗
+║   ██╗     ██╗     ███╗   ███╗███████╗                        ║
+║   ██║     ██║     ████╗ ████║██╔════╝   LLMs with            ║
+║   ██║     ██║     ██╔████╔██║███████╗   Hugging Face         ║
+║   ██║     ██║     ██║╚██╔╝██║╚════██║                        ║
+║   ███████╗███████╗██║ ╚═╝ ██║███████║   Research Assistant   ║
+║   ╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+┌──────────────────┬──────────────────────────────────┬──────────┐
+│ Feature          │ Description                      │ Status   │
+├──────────────────┼──────────────────────────────────┼──────────┤
+│ Chat Interface   │ OpenAI-compatible chat with LLMs │ ✅       │
+│ RAG Pipeline     │ Semantic search + embeddings     │ ✅       │
+│ REST API         │ FastAPI at /chat, /research      │ ✅       │
+│ Agents           │ LangChain with tool calling      │ ✅       │
+└──────────────────┴──────────────────────────────────┴──────────┘
+
+⠋ Encoding query... ✓ Found 3 relevant documents!
+```
+
+---
+
+## Features
+
+| Feature | Description | Example |
+|---------|-------------|---------|
+| **Chat Interface** | OpenAI-compatible chat with local/remote LLMs | `examples/1-simple/` |
+| **RAG Pipeline** | Semantic search with Sentence Transformers + Qdrant | `examples/2-rag/` |
+| **REST API** | FastAPI endpoints for LLM integration | `examples/3-api/` |
+| **Small LMs** | Efficient local models with Ollama | `examples/4-small-lm/` |
+| **Agents** | LangChain agents with tool calling | `examples/5-agentic/` |
+
+---
 
 ## Labs
 
-Complete these hands-on labs to reinforce your learning:
+Complete hands-on labs to master LLM development:
 
-| Lab | Topic | Examples Used |
-|-----|-------|---------------|
-| [Lab 1: Building a Simple Chat Interface](./labs/lab-1.md) | Connect to LLMs, build chat apps, async operations, structured output | [examples/1-simple](./examples/1-simple/) |
-| [Lab 2: Retrieval Augmented Generation (RAG)](./labs/lab-2.md) | Embeddings, vector databases, semantic search, RAG pipelines | [examples/2-rag](./examples/2-rag/) |
-| [Lab 3: Building LLM APIs with FastAPI](./labs/lab-3.md) | HTTP APIs, FastAPI endpoints, RAG integration | [examples/3-api](./examples/3-api/) |
-| [Lab 4: Working with Small Language Models](./labs/lab-4.md) | Model selection, optimization, benchmarking, model routing | [examples/4-small-lm](./examples/4-small-lm/) |
-| [Lab 5: Building Agentic Applications](./labs/lab-5.md) | Function calling, tool use, LangChain agents, Hugging Face Inference | [examples/5-agentic](./examples/5-agentic/) |
+| Lab | Topic | Time |
+|-----|-------|------|
+| [Lab 1: Chat Interface](./labs/lab-1.md) | Connect to LLMs, async operations, structured output | 30 min |
+| [Lab 2: RAG](./labs/lab-2.md) | Embeddings, vector databases, semantic search | 45 min |
+| [Lab 3: APIs](./labs/lab-3.md) | FastAPI endpoints, RAG integration | 30 min |
+| [Lab 4: Small LMs](./labs/lab-4.md) | Model selection, optimization, benchmarking | 30 min |
+| [Lab 5: Agents](./labs/lab-5.md) | Function calling, LangChain, tool use | 45 min |
 
 ### Capstone Project
 
-After completing all labs, build a comprehensive AI-powered research assistant in the [Capstone Project](./docs/capstone-project.md). This project combines RAG, agents, and API development into a production-ready application.
+Build a production-ready **AI Research Assistant** combining all concepts:
 
-## Course Outline
+```
+research-assistant/
+├── src/
+│   ├── api/          # FastAPI application
+│   ├── agents/       # Research agent with tools
+│   ├── rag/          # Vector store & retrieval
+│   └── models/       # LLM client & schemas
+└── tests/            # 59 test cases
+```
 
-### Lesson 1: Getting Started with LLMs
-- [Building a simple chat interface](./examples/1-simple/)
-- Prompt engineering patterns
-- System prompts and roles
-- Async operations for better performance
-- Structured output with Pydantic
+See [Capstone Project](./docs/capstone-project.md) for full details.
 
-### Lesson 2: Retrieval Augmented Generation
-- [Embeddings with Sentence Transformers](./examples/2-rag/)
-- Building and querying vector databases
-- Semantic search with Qdrant
-- Combining search results with LLM generation
+---
 
-### Lesson 3: Building LLM APIs
-- [Python APIs with FastAPI](./examples/3-api/)
-- Creating chat endpoints
-- Integrating RAG with web services
-- Testing and deploying APIs
+## API Demo
 
-### Lesson 4: Small Language Models
-- [Working with efficient local models](./examples/4-small-lm/)
-- Model size tradeoffs
-- Benchmarking and optimization
-- Intelligent model routing
+Start the Research Assistant API:
 
-### Lesson 5: Agentic Applications
-- [Function calling and tool use](./examples/5-agentic/)
-- Building agents with LangChain
-- Using Hugging Face Inference API
-- Multi-tool agent development
+```bash
+uv run uvicorn src.api.main:app --reload
+```
 
-## Local Setup
+**Endpoints:**
 
-If you prefer to work locally instead of using Codespaces:
+```bash
+# Health check
+curl http://localhost:8000/health
+# {"status": "healthy"}
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/alfredodeza/hf-llms.git
-   cd hf-llms
-   ```
+# Chat
+curl -X POST http://localhost:8000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What is machine learning?"}'
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
+# Add document to knowledge base
+curl -X POST http://localhost:8000/documents \
+  -H "Content-Type: application/json" \
+  -d '{"title": "ML Basics", "content": "Machine learning is..."}'
 
-3. Install dependencies:
-   ```bash
-   pip install openai sentence-transformers qdrant-client pandas fastapi uvicorn langchain langchain-openai
-   ```
+# Research with RAG
+curl -X POST http://localhost:8000/research \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Explain machine learning"}'
+```
 
-4. Install Ollama for local LLM inference:
-   ```bash
-   # Visit https://ollama.ai for installation instructions
-   ollama pull qwen2.5-coder:7b-instruct
-   ```
+Interactive docs at: http://localhost:8000/docs
 
-5. Open in VS Code:
-   ```bash
-   code .
-   ```
+---
+
+## Installation
+
+### Option 1: GitHub Codespaces (Recommended)
+
+Click the badge above - everything is pre-configured.
+
+### Option 2: Local Setup
+
+**Prerequisites:**
+- Python 3.10+
+- [uv](https://docs.astral.sh/uv/) package manager
+- [Ollama](https://ollama.ai) for local LLMs
+
+```bash
+# Install uv (if needed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone repository
+git clone https://github.com/alfredodeza/hf-llms.git
+cd hf-llms
+
+# Install dependencies
+uv sync --all-extras
+
+# Verify installation
+uv run pytest tests/ -v
+```
+
+---
+
+## Project Structure
+
+```
+llms-with-huggingface/
+├── examples/           # Standalone examples for each lesson
+│   ├── 1-simple/       # Basic chat interface
+│   ├── 2-rag/          # RAG with Qdrant
+│   ├── 3-api/          # FastAPI endpoints
+│   ├── 4-small-lm/     # Local model config
+│   └── 5-agentic/      # LangChain agents
+├── labs/               # Hands-on lab instructions
+├── src/                # Capstone implementation
+│   ├── api/            # FastAPI app with routes
+│   ├── agents/         # Research agent + tools
+│   ├── rag/            # VectorStore implementation
+│   └── models/         # LLMClient + Pydantic schemas
+├── tests/              # 59 test cases (API, RAG, security)
+└── docs/               # Capstone project guide
+```
+
+---
+
+## Configuration
+
+Set environment variables for LLM access:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OPENAI_API_KEY` | `ollama` | API key (any value for Ollama) |
+| `OPENAI_API_BASE` | `http://localhost:11434/v1` | API endpoint |
+| `MODEL_NAME` | `qwen2.5-coder:7b-instruct` | Model to use |
+
+---
+
+## Development
+
+```bash
+# Run tests
+uv run pytest tests/ -v
+
+# Lint code
+uv run ruff check src/ tests/
+
+# Format code
+uv run ruff format src/ tests/
+
+# Type check
+uv run mypy src/
+```
+
+---
+
+## Troubleshooting
+
+<details>
+<summary><strong>Ollama Connection Issues</strong></summary>
+
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# Start Ollama
+ollama serve
+```
+</details>
+
+<details>
+<summary><strong>Model Not Found</strong></summary>
+
+```bash
+# List available models
+ollama list
+
+# Pull required model
+ollama pull qwen2.5-coder:7b-instruct
+```
+</details>
+
+<details>
+<summary><strong>Import Errors</strong></summary>
+
+```bash
+# Reinstall dependencies
+uv sync --all-extras
+```
+</details>
+
+<details>
+<summary><strong>Port 8000 In Use</strong></summary>
+
+```bash
+# Find and kill process
+lsof -i :8000
+kill -9 <PID>
+
+# Or use different port
+uv run uvicorn src.api.main:app --port 8001
+```
+</details>
+
+---
 
 ## Resources
 
-- [Hugging Face Documentation](https://huggingface.co/docs)
-- [Hugging Face Hub](https://huggingface.co/models)
-- [Sentence Transformers](https://www.sbert.net/)
-- [Qdrant Vector Database](https://qdrant.tech/documentation/)
-- [LangChain Documentation](https://python.langchain.com/)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+**Documentation:**
+- [Hugging Face Docs](https://huggingface.co/docs)
+- [LangChain Docs](https://python.langchain.com/)
+- [FastAPI Docs](https://fastapi.tiangolo.com/)
+- [Qdrant Docs](https://qdrant.tech/documentation/)
 
-**Coursera Courses**
+**Courses:**
+- [MLOps Specialization](https://www.coursera.org/specializations/mlops-machine-learning-duke)
+- [Python for MLOps](https://www.coursera.org/learn/python-essentials-mlops-duke)
 
-- [MLOps Machine Learning Operations Specialization](https://www.coursera.org/specializations/mlops-machine-learning-duke)
-- [Linux and Bash for Data Engineering](https://www.coursera.org/learn/linux-and-bash-for-data-engineering-duke)
-- [Open Source Platforms for MLOps](https://www.coursera.org/learn/open-source-platforms-duke)
-- [Python Essentials for MLOps](https://www.coursera.org/learn/python-essentials-mlops-duke)
-- [Web Applications and Command-Line tools for Data Engineering](https://www.coursera.org/learn/web-app-command-line-tools-for-data-engineering-duke)
-- [Python and Pandas for Data Engineering](https://www.coursera.org/learn/python-and-pandas-for-data-engineering-duke)
-- [Scripting with Python and SQL for Data Engineering](https://www.coursera.org/learn/scripting-with-python-sql-for-data-engineering-duke)
+---
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
-
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create feature branch: `git checkout -b feature/amazing`
+3. Run tests: `uv run pytest tests/`
+4. Commit changes: `git commit -m 'Add feature'`
+5. Push: `git push origin feature/amazing`
+6. Open Pull Request
 
-Please ensure your code follows the existing style and includes appropriate documentation.
+---
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+Apache License 2.0 - see [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  Made with care by <a href="https://paiml.com">Pragmatic AI Labs</a>
+</p>

@@ -40,13 +40,17 @@ Thank you for your interest in contributing to this project!
 git clone https://github.com/YOUR_USERNAME/llms-with-huggingface.git
 cd llms-with-huggingface
 
-# Install development tools
-make install
+# Install all dependencies with uv
+uv sync --all-extras
 
 # Run linting
-make lint
+uv run ruff check .
 
-# Run syntax validation
+# Run tests
+uv run pytest
+
+# Or use make targets
+make lint
 make test
 ```
 

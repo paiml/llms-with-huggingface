@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from qdrant_client import QdrantClient, models
 from sentence_transformers import SentenceTransformer
 
-
 model_name: str = os.getenv("MODEL_NAME", "qwen3-coder")
 
 client = OpenAI(
@@ -27,9 +26,7 @@ root = dirname(dirname(current_directory))
 csv_file = os.path.join(root, "top_rated_wines.csv")
 df = pd.read_csv(csv_file)
 df = df[df["variety"].notna()]
-data = df.sample(700).to_dict(
-    "records"
-)  # Get only 700 records. More records will make it slower to index
+data = df.sample(700).to_dict("records")  # Get only 700 records. More records will make it slower to index
 
 
 # Load the encoder
@@ -112,9 +109,7 @@ def generate(body: Body) -> dict[str, str | None]:
         Dictionary with the AI's wine recommendation.
     """
     # Search time for awesome wines!
-    hits = qdrant.query_points(
-        collection_name="top_wines", query=encoder.encode(body.text).tolist(), limit=4
-    )
+    hits = qdrant.query_points(collection_name="top_wines", query=encoder.encode(body.text).tolist(), limit=4)
     # Debug the output from the Vector Database
     print(hits)
     # define a variable to hold the search results

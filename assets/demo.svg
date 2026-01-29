@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="termGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d3d3d"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Terminal window -->
+  <rect width="800" height="500" rx="10" fill="url(#termGrad)"/>
+
+  <!-- Title bar -->
+  <rect width="800" height="35" rx="10" fill="#2d2d2d"/>
+  <rect y="25" width="800" height="10" fill="#2d2d2d"/>
+
+  <!-- Window controls -->
+  <circle cx="20" cy="17" r="6" fill="#ff5f56"/>
+  <circle cx="40" cy="17" r="6" fill="#ffbd2e"/>
+  <circle cx="60" cy="17" r="6" fill="#27ca40"/>
+
+  <!-- Title -->
+  <text x="400" y="22" font-family="Monaco, monospace" font-size="12" fill="#888" text-anchor="middle">demo.py — LLMs with Hugging Face</text>
+
+  <!-- Terminal content -->
+  <text x="20" y="65" font-family="Monaco, monospace" font-size="13" fill="#00d4aa">$ uv run python demo.py</text>
+
+  <!-- ASCII Banner -->
+  <text x="20" y="95" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">╔═══════════════════════════════════════════════════════════════╗</text>
+  <text x="20" y="110" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">║   ██╗     ██╗     ███╗   ███╗███████╗                        ║</text>
+  <text x="20" y="125" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">║   ██║     ██║     ████╗ ████║██╔════╝   LLMs with            ║</text>
+  <text x="20" y="140" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">║   ██║     ██║     ██╔████╔██║███████╗   Hugging Face         ║</text>
+  <text x="20" y="155" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">║   ███████╗███████╗██║ ╚═╝ ██║███████║                        ║</text>
+  <text x="20" y="170" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">╚═══════════════════════════════════════════════════════════════╝</text>
+
+  <!-- Features table -->
+  <text x="20" y="200" font-family="Monaco, monospace" font-size="12" fill="#fff" font-weight="bold">Available Features</text>
+
+  <text x="20" y="225" font-family="Monaco, monospace" font-size="11" fill="#888">┌──────────────────┬──────────────────────────────────┬──────────┐</text>
+  <text x="20" y="240" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="240" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">Chat Interface</text>
+  <text x="165" y="240" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="175" y="240" font-family="Monaco, monospace" font-size="11" fill="#aaa">OpenAI-compatible chat</text>
+  <text x="408" y="240" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="430" y="240" font-family="Monaco, monospace" font-size="11" fill="#27ca40">✅</text>
+  <text x="470" y="240" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="255" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="255" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">RAG Pipeline</text>
+  <text x="165" y="255" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="175" y="255" font-family="Monaco, monospace" font-size="11" fill="#aaa">Semantic search + Qdrant</text>
+  <text x="408" y="255" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="430" y="255" font-family="Monaco, monospace" font-size="11" fill="#27ca40">✅</text>
+  <text x="470" y="255" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="270" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="270" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">REST API</text>
+  <text x="165" y="270" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="175" y="270" font-family="Monaco, monospace" font-size="11" fill="#aaa">FastAPI /chat, /research</text>
+  <text x="408" y="270" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="430" y="270" font-family="Monaco, monospace" font-size="11" fill="#27ca40">✅</text>
+  <text x="470" y="270" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="285" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="285" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">Agents</text>
+  <text x="165" y="285" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="175" y="285" font-family="Monaco, monospace" font-size="11" fill="#aaa">LangChain tool calling</text>
+  <text x="408" y="285" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="430" y="285" font-family="Monaco, monospace" font-size="11" fill="#27ca40">✅</text>
+  <text x="470" y="285" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="300" font-family="Monaco, monospace" font-size="11" fill="#888">└──────────────────┴──────────────────────────────────┴──────────┘</text>
+
+  <!-- RAG Search simulation -->
+  <text x="20" y="330" font-family="Monaco, monospace" font-size="12" fill="#ff9800">⠋ Simulating RAG Search...</text>
+  <text x="20" y="350" font-family="Monaco, monospace" font-size="11" fill="#27ca40">✓ Found 3 relevant documents!</text>
+
+  <!-- Search results -->
+  <text x="20" y="380" font-family="Monaco, monospace" font-size="11" fill="#888">┌────────┬─────────────────────────┬─────────────────────────┐</text>
+  <text x="20" y="395" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="395" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">0.95</text>
+  <text x="85" y="395" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="95" y="395" font-family="Monaco, monospace" font-size="11" fill="#27ca40">Machine Learning Basics</text>
+  <text x="290" y="395" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="300" y="395" font-family="Monaco, monospace" font-size="11" fill="#666">ML is a subset of AI...</text>
+  <text x="500" y="395" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="410" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="30" y="410" font-family="Monaco, monospace" font-size="11" fill="#00bcd4">0.87</text>
+  <text x="85" y="410" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="95" y="410" font-family="Monaco, monospace" font-size="11" fill="#27ca40">Deep Learning Guide</text>
+  <text x="290" y="410" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+  <text x="300" y="410" font-family="Monaco, monospace" font-size="11" fill="#666">Neural networks are...</text>
+  <text x="500" y="410" font-family="Monaco, monospace" font-size="11" fill="#888">│</text>
+
+  <text x="20" y="425" font-family="Monaco, monospace" font-size="11" fill="#888">└────────┴─────────────────────────┴─────────────────────────┘</text>
+
+  <!-- Success message -->
+  <text x="20" y="460" font-family="Monaco, monospace" font-size="12" fill="#27ca40">✓ Demo complete! Run 'uv run uvicorn src.api.main:app' to start the API.</text>
+
+  <!-- Cursor -->
+  <rect x="20" y="475" width="8" height="15" fill="#00d4aa">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+  </rect>
+</svg>

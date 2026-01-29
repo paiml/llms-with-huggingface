@@ -7,7 +7,6 @@ import openai
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-
 openai.api_base = os.getenv("OPENAI_API_BASE")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 model_name: str | None = os.getenv("MODEL_NAME")

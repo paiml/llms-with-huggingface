@@ -1,0 +1,70 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║   ██╗     ██╗     ███╗   ███╗███████╗                        ║
+║   ██║     ██║     ████╗ ████║██╔════╝                        ║
+║   ██║     ██║     ██╔████╔██║███████╗                        ║
+║   ██║     ██║     ██║╚██╔╝██║╚════██║                        ║
+║   ███████╗███████╗██║ ╚═╝ ██║███████║                        ║
+║   ╚══════╝╚══════╝╚═╝     ╚═╝╚══════╝                        ║
+║                                                               ║
+║   with Hugging Face - Research Assistant Demo                 ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Welcome to the LLMs with Hugging Face Demo!
+
+┌─────────────────────────────────────────────────────────────────┐
+│                     Available Features                          │
+├──────────────────┬──────────────────────────────────┬───────────┤
+│ Feature          │ Description                      │ Status    │
+├──────────────────┼──────────────────────────────────┼───────────┤
+│ Chat Interface   │ OpenAI-compatible chat with LLMs │ ✅        │
+│ RAG Pipeline     │ Semantic search + embeddings     │ ✅        │
+│ REST API         │ FastAPI at /chat, /research      │ ✅        │
+│ Agents           │ LangChain with tool calling      │ ✅        │
+│ 59 Tests         │ Comprehensive test coverage      │ ✅        │
+└──────────────────┴──────────────────────────────────┴───────────┘
+
+Simulating RAG Search...
+
+⠋ Encoding query...
+⠙ Searching vector store...
+✓ Found 3 relevant documents!
+
+┌───────────────────────────────────────────────────────────────────┐
+│                        Search Results                             │
+├─────────┬───────────────────────────┬─────────────────────────────┤
+│ Score   │ Title                     │ Preview                     │
+├─────────┼───────────────────────────┼─────────────────────────────┤
+│ 0.95    │ Machine Learning Basics   │ ML is a subset of AI...     │
+│ 0.87    │ Deep Learning Guide       │ Neural networks are...      │
+│ 0.82    │ Python for Data Science   │ Python is widely used...    │
+└─────────┴───────────────────────────┴─────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         REST API                                │
+├─────────────────────────────────────────────────────────────────┤
+│ ## API Endpoints                                                │
+│                                                                 │
+│ | Method | Endpoint     | Description              |            │
+│ |--------|--------------|--------------------------|            │
+│ | GET    | /health      | Health check             |            │
+│ | POST   | /chat        | Chat with LLM            |            │
+│ | POST   | /research    | RAG-powered research     |            │
+│ | POST   | /documents   | Add to knowledge base    |            │
+│                                                                 │
+│ Try it: curl http://localhost:8000/health                       │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                       What's Next?                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ ✓ Demo complete!                                                │
+│                                                                 │
+│ Next steps:                                                     │
+│ 1. Start Ollama: ollama serve                                   │
+│ 2. Run the API: uv run uvicorn src.api.main:app                 │
+│ 3. Open docs: http://localhost:8000/docs                        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘

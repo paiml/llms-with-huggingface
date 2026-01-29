@@ -1,5 +1,5 @@
 {
-	"name": "Fine-tuning with Hugging Face",
+	"name": "LLMs with Hugging Face",
 	"image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
 	"customizations": {
 		"vscode": {
@@ -7,9 +7,16 @@
 				"GitHub.copilot",
 				"ms-python.python",
 				"ms-python.vscode-pylance",
-				"ms-toolsai.jupyter"
+				"ms-toolsai.jupyter",
+				"charliermarsh.ruff"
 			]
 		}
 	},
-	"postCreateCommand": "pip install -r examples/requirements.txt"
+	"features": {
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": true,
+			"version": "3.11"
+		}
+	},
+	"postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && source $HOME/.local/bin/env && uv sync --all-extras"
 }
