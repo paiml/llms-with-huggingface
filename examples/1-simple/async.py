@@ -1,15 +1,28 @@
+"""Async streaming chat interface using OpenAI-compatible API."""
+
 import os
-from openai import OpenAI
+from typing import Any
+
+from openai import OpenAI, Stream
+from openai.types.chat import ChatCompletionChunk
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY", "ollama"),
     base_url=os.getenv("OPENAI_API_BASE", "http://localhost:11434/v1"),
 )
-model_name = os.getenv("MODEL_NAME", "qwen2.5-coder:7b-instruct")
+model_name: str = os.getenv("MODEL_NAME", "qwen2.5-coder:7b-instruct")
 
 
-def ai_chat_stream(user_message):
-    message_text = [
+def ai_chat_stream(user_message: str) -> Stream[ChatCompletionChunk]:
+    """Send a message and get a streaming response.
+
+    Args:
+        user_message: The user's input message.
+
+    Returns:
+        Stream of ChatCompletionChunk objects for real-time output.
+    """
+    message_text: list[dict[str, Any]] = [
         {"role": "system", "content": "You are a friendly AI assistant."},
         {"role": "user", "content": user_message},
     ]

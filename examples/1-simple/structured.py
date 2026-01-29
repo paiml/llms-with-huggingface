@@ -1,15 +1,28 @@
+"""Structured JSON output chat interface using OpenAI-compatible API."""
+
 import os
+from typing import Any
+
 from openai import OpenAI
+from openai.types.chat import ChatCompletion
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY"), base_url=os.getenv("OPENAI_API_BASE")
 )
 client.api_base = "http://localhost:11434"
-model_name = os.getenv("MODEL_NAME")
+model_name: str | None = os.getenv("MODEL_NAME")
 
 
-def ai_chat(user_message):
-    message_text = [
+def ai_chat(user_message: str) -> ChatCompletion:
+    """Send a message and get a JSON-formatted response.
+
+    Args:
+        user_message: The user's input message.
+
+    Returns:
+        ChatCompletion object containing the AI's JSON response.
+    """
+    message_text: list[dict[str, Any]] = [
         {
             "role": "system",
             "content": "You are an HTTP API and you respond only in JSON. Avoid niceties or formalities, you only respond in JSON format to user questions. Avoid formatting like backticks ` or trying to format like a markdown document. ONLY respond in pure JSON",
@@ -35,5 +48,5 @@ print("Welcome! how can I help you today?")
 while True:
     user_message = input(">> ")
     completion = ai_chat(user_message)
-    # Completion will return a response that we need to use to get the acctual string
+    # Completion will return a response that we need to use to get the actual string
     print(completion.choices[0].message.content)

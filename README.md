@@ -1,8 +1,24 @@
-[![LLMs with Hugging Face](./assets/banner.svg)](https://ds500.paiml.com "Pragmatic AI Labs")
-
 # Large Language Models with Hugging Face
 
+<p align="center">
+  <a href="https://ds500.paiml.com" title="Pragmatic AI Labs">
+    <img src="./assets/banner.svg" alt="LLMs with Hugging Face" width="600">
+  </a>
+</p>
+
 Hands-on labs for running and building applications with Large Language Models. A Hugging Face course from Pragmatic AI Labs.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Labs](#labs)
+- [Course Outline](#course-outline)
+- [Local Setup](#local-setup)
+- [Resources](#resources)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Overview
 

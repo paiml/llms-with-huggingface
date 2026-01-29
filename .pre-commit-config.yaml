@@ -1,3 +1,4 @@
+# @perf: All hooks are fast linters, no test execution
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.3.0
@@ -18,7 +19,6 @@ repos:
       - id: detect-private-key
       - id: check-json
       - id: check-toml
-      - id: check-ast
       - id: debug-statements
 
   - repo: https://github.com/codespell-project/codespell
@@ -33,12 +33,13 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
 
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.7
-    hooks:
-      - id: bandit
-        args: ['-ll', '--skip=B101', '-r', 'examples/']
-        pass_filenames: false
+  # Security scanning moved to CI for faster commits
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.7.7
+  #   hooks:
+  #     - id: bandit
+  #       args: ['-ll', '--skip=B101', '-r', 'examples/']
+  #       pass_filenames: false
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.0

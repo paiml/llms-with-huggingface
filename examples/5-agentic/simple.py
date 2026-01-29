@@ -1,13 +1,28 @@
+"""Simple agentic workflow demo for bike ride planning.
+
+This minimal example shows how to create an agent with a single tool
+using LangChain's agent framework.
+"""
+
 import json
-from langchain_core.tools import tool
+from typing import Any
+
 from langchain.agents import create_agent
+from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 
 
 @tool
 def get_weather(day: str = "today") -> str:
-    """Get weather conditions. Use 'today' or 'week'."""
-    mock_weather = {
+    """Get weather conditions. Use 'today' or 'week'.
+
+    Args:
+        day: Time period to check weather for.
+
+    Returns:
+        Weather information as a formatted string.
+    """
+    mock_weather: dict[str, Any] = {
         "today": "Sunny, 72°F, Wind: 5mph",
         "week": {
             "Mon": "Sunny, 72°F",
@@ -26,7 +41,7 @@ def get_weather(day: str = "today") -> str:
 
 
 # ========== AGENT SETUP ==========
-def create_bike_agent():
+def create_bike_agent() -> Any:
     """Create and configure the bike planning agent."""
 
     # Initialize LLM

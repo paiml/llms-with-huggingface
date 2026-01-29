@@ -1,14 +1,19 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-import pandas as pd
+"""RAG-powered FastAPI wine recommendation service with vector search."""
+
 import os
 from os.path import dirname
+from typing import Any
+
+import pandas as pd
+from fastapi import FastAPI
 from openai import OpenAI
-from qdrant_client import models, QdrantClient
+from openai.types.chat import ChatCompletion
+from pydantic import BaseModel
+from qdrant_client import QdrantClient, models
 from sentence_transformers import SentenceTransformer
 
 
-model_name = os.getenv("MODEL_NAME", "qwen3-coder")
+model_name: str = os.getenv("MODEL_NAME", "qwen3-coder")
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY", "ollama"),
@@ -58,14 +63,25 @@ qdrant.upload_points(
 
 
 class Body(BaseModel):
+    """Request body for the wine recommendation endpoint."""
+
     text: str
 
 
-def ai_chat(user_message, extra_context=""):
+def ai_chat(user_message: str, extra_context: str = "") -> ChatCompletion:
+    """Send a message to the AI with optional wine context.
+
+    Args:
+        user_message: The user's input message.
+        extra_context: Additional wine information from vector search.
+
+    Returns:
+        ChatCompletion object containing the AI's response.
+    """
     user_content = user_message
     if extra_context:
         user_content = f"{user_message}\n\nHere is some relevant wine information:\n{extra_context}"
-    message_text = [
+    message_text: list[dict[str, Any]] = [
         {
             "role": "system",
             "content": "You are a wine specialist. Your top priority is to help guide users find the best wine. You always come with good suggestions.",
@@ -86,7 +102,15 @@ def ai_chat(user_message, extra_context=""):
 
 
 @app.post("/generate")
-def generate(body: Body):
+def generate(body: Body) -> dict[str, str | None]:
+    """Generate a wine recommendation using RAG.
+
+    Args:
+        body: Request body containing the user's query.
+
+    Returns:
+        Dictionary with the AI's wine recommendation.
+    """
     # Search time for awesome wines!
     hits = qdrant.query_points(
         collection_name="top_wines", query=encoder.encode(body.text).tolist(), limit=4
